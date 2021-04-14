@@ -55,12 +55,8 @@ functions:
   app:
     handler: handler.generic
     events:
-      - http: 
-          path: /user
-          method: get
-      - http: 
-          path: /user
-          method: post
+      - http: ANY /
+      - http: ANY {proxy+}
 
 resources:
   Resources:

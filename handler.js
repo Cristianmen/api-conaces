@@ -2,50 +2,83 @@
 
 const serverless = require('serverless-http');
 const express = require('express');
-const AWS = require('aws-sdk');
 const bodyParser = require('body-parser');
-const USERS_TABLE = process.env.USERS_TABLE;
-
+const DynamoBDClas = require('./dynamoDB');
 const app = express();
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
 app.use(bodyParser.json({ string: false }))
 
+app.get('/user', async (req, res) => {
+  const userDB = new DynamoBDClas();
+  const users = await userDB.getUser();
+  console.log('getUser -> uu:  ', users);
+  //validar usaurio
+  if (users) {
+    res.json({
+      success: 'true',
+      users: users
+    });
+  } else {
+    res.status(400).json({
+      error: 'error'
+    });
+  }
+});
 
-app.get('/user', (req, res) => {
-  console.log('get');
+app.post('/login', async (req, res) => {
+  const userDB = new DynamoBDClas();
+  console.log('req: ', req);
+  const { userId, name, pass } = req.body;
+  const data = {
+    userId: userId
+  }
+  console.log('data: ', data);
+  const response = await userDB.logintUser(data);
+  console.log('data: ', data);
+  if (response) {
 
-  const params = {};
-  params.TableName = USERS_TABLE;
-  // params.Key = { userId: '1234' };
-  console.log('putUser -> params:  ', params);
-  dynamoDB.scan(params, (error, result) =>{
+    if (response.userId === userId && response.pass === pass) {
+      res.json({
+        success: 'true',
+        users: response
+      });
+    } else {
 
-    if (error) {
-      console.log('putUser -> error:  ', error);
-      res.status(400).json({
+      res.status(404).json({
         error: 'error'
       });
 
-    } else {
-
-      console.log('prueba');
-      const {Items} = result;
-      res.json({
-        success:'true',
-        users:Items
-      });
     }
 
-  })
-
+  } else {
+    res.status(400).json({
+      error: 'error'
+    });
+  }
 });
 
-app.post('/user', (req, res) => {
-  const { userId, name } = req.body;
+app.post('/user', async (req, res) => {
+  const userDB = new DynamoBDClas();
+  console.log('req: ', req);
+  const { userId, name, pass } = req.body;
+  const data = {
+    userId: userId,
+    name: name,
+    pass: pass
+  }
+  console.log('data: ', data);
+  const response = await userDB.putUser(data);
 
-  res.json({ userId, name });
-  console.log('get');
+  if (response) {
+    res.json({
+      success: 'true',
+      users: response
+    });
+  } else {
+    res.status(400).json({
+      error: 'error'
+    });
+  }
 });
 
 module.exports.generic = serverless(app);
