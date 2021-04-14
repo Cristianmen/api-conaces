@@ -53,14 +53,12 @@ provider:
 
 functions:
   app:
-    handler: handler.generic
+    handler: app.generic
     events:
       - http: 
-          path: /user
+          path: ANY /
           method: get
-      - http: 
-          path: /user
-          method: post
+      
 
 resources:
   Resources:

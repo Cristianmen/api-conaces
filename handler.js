@@ -18,6 +18,7 @@ app.get('/user', (req, res) => {
   const params = {};
   params.TableName = USERS_TABLE;
   // params.Key = { userId: '1234' };
+  /*
   console.log('putUser -> params:  ', params);
   dynamoDB.scan(params, (error, result) =>{
 
@@ -38,7 +39,7 @@ app.get('/user', (req, res) => {
     }
 
   })
-
+*/
 });
 
 app.post('/user', (req, res) => {
