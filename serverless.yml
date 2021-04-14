@@ -61,6 +61,7 @@ functions:
       - http: 
           path: /user
           method: post
+          
 
 resources:
   Resources:
