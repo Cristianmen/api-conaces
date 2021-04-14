@@ -29,6 +29,7 @@ app.get('/user', (req, res) => {
 
     } else {
 
+      console.log('prueba');
       const {Items} = result;
       res.json({
         success:'true',
