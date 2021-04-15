@@ -105,6 +105,51 @@ class DynamoBDClas {
         })
     }
 
+    async getRepo() {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = REPOS_TABLE;
+                console.log('getUser -> params:  ', params);
+                dynamoDB.scan(params, (error, result) => {
+                    if (error) {
+                        console.log('getUser -> error:  ', error);
+                        reject(error);
+                    } else {
+                        const { Items } = result;
+                        console.log('Items', Items);
+                        resolved(Items);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    async putRepo(item) {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = REPOS_TABLE;
+                params.Item = item
+                console.log('getUser -> params:  ', params);
+                dynamoDB.put(params, (error, result) => {
+                    if (error) {
+                        console.log('putItem -> error:  ', error);
+                        reject(error);
+                    } else {
+                        console.log('putItem -> result:  ', result);
+                        resolved(result);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+    
+
 }
 
 module.exports = DynamoBDClas;
