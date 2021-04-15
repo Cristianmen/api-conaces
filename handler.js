@@ -4,11 +4,12 @@ const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const DynamoBDClas = require('./dynamoDB');
+const cors = require('cors')
 const app = express();
 
 app.use(bodyParser.json({ string: false }))
 
-app.get('/user', async (req, res) => {
+app.get('/user', cors(), async (req, res) => {
   const userDB = new DynamoBDClas();
   const users = await userDB.getUser();
   console.log('getUser -> uu:  ', users);
@@ -25,7 +26,7 @@ app.get('/user', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/login', cors(), async (req, res) => {
   const userDB = new DynamoBDClas();
   console.log('req: ', req);
   const { userId, name, pass } = req.body;
@@ -68,6 +69,46 @@ app.post('/user', async (req, res) => {
   }
   console.log('data: ', data);
   const response = await userDB.putUser(data);
+
+  if (response) {
+    res.json({
+      success: 'true',
+      users: response
+    });
+  } else {
+    res.status(400).json({
+      error: 'error'
+    });
+  }
+});
+
+app.get('/repositorios', cors(), async (req, res) => {
+  const userDB = new DynamoBDClas();
+  const users = await userDB.getRepo();
+  console.log('getUser -> uu:  ', users);
+  //validar usaurio
+  if (users) {
+    res.json({
+      success: 'true',
+      users: users
+    });
+  } else {
+    res.status(400).json({
+      error: 'error'
+    });
+  }
+});
+
+app.post('/repositorios', cors(), async (req, res) => {
+  const userDB = new DynamoBDClas();
+  console.log('req: ', req);
+  const { repoId, content } = req.body;
+  const data = {
+    repoId: repoId,
+    content: content
+  }
+  console.log('data: ', data);
+  const response = await userDB.putRepo(data);
 
   if (response) {
     res.json({
