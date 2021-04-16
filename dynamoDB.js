@@ -148,6 +148,138 @@ class DynamoBDClas {
             }
         })
     }
+
+    async getEvent() {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = EVENT_TABLE;
+                console.log('getEvento -> params:  ', params);
+                dynamoDB.scan(params, (error, result) => {
+                    if (error) {
+                        console.log('getEvento-> error:  ', error);
+                        reject(error);
+                    } else {
+                        const { Items } = result;
+                        console.log('Items', Items);
+                        resolved(Items);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    async putEvent(item) {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = EVENT_TABLE;
+                params.Item = item
+                console.log('getEvento -> params:  ', params);
+                dynamoDB.put(params, (error, result) => {
+                    if (error) {
+                        console.log('getEvento -> error:  ', error);
+                        reject(error);
+                    } else {
+                        console.log('getEvento -> result:  ', result);
+                        resolved(result);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    async getForo() {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = FORO_TABLE;
+                console.log('getForo -> params:  ', params);
+                dynamoDB.scan(params, (error, result) => {
+                    if (error) {
+                        console.log('getForo-> error:  ', error);
+                        reject(error);
+                    } else {
+                        const { Items } = result;
+                        console.log('Items', Items);
+                        resolved(Items);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    async putForo(item) {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = FORO_TABLE;
+                params.Item = item
+                console.log('getForo -> params:  ', params);
+                dynamoDB.put(params, (error, result) => {
+                    if (error) {
+                        console.log('putItem -> error:  ', error);
+                        reject(error);
+                    } else {
+                        console.log('putItem -> result:  ', result);
+                        resolved(result);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    async getPreg() {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = PREG_TABLE;
+                console.log('getPreg -> params:  ', params);
+                dynamoDB.scan(params, (error, result) => {
+                    if (error) {
+                        console.log('getPreg -> error:  ', error);
+                        reject(error);
+                    } else {
+                        const { Items } = result;
+                        console.log('Items', Items);
+                        resolved(Items);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    async putPreg(item) {
+        return new Promise(async (resolved, reject) => {
+            try {
+                const params = {};
+                params.TableName = PREG_TABLE;
+                params.Item = item
+                console.log('getPreg -> params:  ', params);
+                dynamoDB.put(params, (error, result) => {
+                    if (error) {
+                        console.log('putItem -> error:  ', error);
+                        reject(error);
+                    } else {
+                        console.log('putItem -> result:  ', result);
+                        resolved(result);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
     
 
 }
