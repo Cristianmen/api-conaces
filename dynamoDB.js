@@ -280,7 +280,96 @@ class DynamoBDClas {
             }
         })
     }
+
+    async deleteEvent(item) {
+
+        return  new Promise(async(resolved, reject) => {
+            try {
+               
+                const evento= EVENT_TABLE
+            
+                const eventId= item
+              
+                const params = {
+                    TableName:evento,
+                    Key:{
+                        "eventId":eventId
+                    },
+                }
+
+                dynamoDB.delete(params, (error, result) => {
+                    if (error) {
+                        console.log('deleteEvento -> error:  ', error);
+                        reject(error);
+                    } else {
+                        console.log('deleteEvento -> result:  ', result);
+                        resolved(result);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+
+    async deletePreg(item) {
+
+        return new Promise(async(resolved, reject) => {
+            try {
+
+                const pregunta = PREG_TABLE
+                const preguntasId = item
+                const params = {
+                    TableName: pregunta,
+                    Key: {
+                        "preguntasId": preguntasId
+                    },
+                }
+
+                dynamoDB.delete(params, (error, result) => {
+                    if (error) {
+                        console.log('deleteEvento -> error:  ', error);
+                        reject(error);
+                    } else {
+                        console.log('deleteEvento -> result:  ', result);
+                        resolved(result);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
     
+    async deleteRepo(item) {
+
+        return new Promise(async(resolved, reject) => {
+            try {
+
+                const repositorio = REPOS_TABLE
+                const repoId = item
+                const params = {
+                    TableName: repositorio,
+                    Key: {
+                        "repoId": repoId
+                    },
+                }
+
+                dynamoDB.delete(params, (error, result) => {
+                    if (error) {
+                        console.log('deleteEvento -> error:  ', error);
+                        reject(error);
+                    } else {
+                        console.log('deleteEvento -> result:  ', result);
+                        resolved(result);
+                    }
+                })
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
 
 }
 

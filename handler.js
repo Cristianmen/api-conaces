@@ -294,5 +294,83 @@ app.post('/preguntas', cors(), async (req, res) => {
   }
 
 });
+
+app.delete('/evento', cors(), async(req, res) => {
+  const userDB = new DynamoBDClas();
+  console.log('req: ', req);
+  console.log("....")
+
+  const { eventId } = req.body;
+  const data = {
+      eventId: eventId
+  }
+  console.log('data: ', data.eventId);
+
+  const response = await userDB.deleteEvent(data.eventId);
+
+  if (response) {
+      res.json({
+          success: 'true',
+          users: response
+      });
+  } else {
+      res.status(400).json({
+        error : 'error'
+      })
+    }
+  });
+
+  app.delete('/preguntas', cors(), async(req, res) => {
+    const userDB = new DynamoBDClas();
+    console.log('req: ', req);
+    console.log("....")
+  
+    const { preguntasId } = req.body;
+    const data = {
+      preguntasId: preguntasId
+    }
+    console.log('data: ', data.preguntasId);
+  
+    const response = await userDB.deletePreg(data.preguntasId);
+  
+    if (response) {
+        res.json({
+            success: 'true',
+            users: response
+        });
+    } else {
+        res.status(400).json({
+          error : 'error'
+        })
+      }
+    });
+
+    app.delete('/repositorios', cors(), async(req, res) => {
+      const userDB = new DynamoBDClas();
+      console.log('req: ', req);
+      console.log("....")
+    
+      const { repoId } = req.body;
+      const data = {
+        repoId: repoId
+      }
+      console.log('data: ', data.repoId);
+    
+      const response = await userDB.deletePreg(data.repoId);
+    
+      if (response) {
+          res.json({
+              success: 'true',
+              users: response
+          });
+      } else {
+          res.status(400).json({
+            error : 'error'
+          })
+        }
+      });
+  
+
+  
 module.exports.generic = serverless(app);
 
