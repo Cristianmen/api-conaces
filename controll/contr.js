@@ -63,7 +63,7 @@ class validar {
 
   exprecionFecha(x){
     const cadena = x
-    const result =/^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[1-2])\1\d{4}$/.test(cadena);
+    const result =/^([0-9]{0,4}[/|-][0-9]{0,2}[/|-][0-9]{0,2})$/.test(cadena);
     console.log(result)
     return result;
   }
