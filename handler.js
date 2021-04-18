@@ -356,7 +356,7 @@ app.delete('/evento', cors(), async(req, res) => {
       }
       console.log('data: ', data.repoId);
     
-      const response = await userDB.deletePreg(data.repoId);
+      const response = await userDB.deleteRepo(data.repoId);
     
       if (response) {
           res.json({

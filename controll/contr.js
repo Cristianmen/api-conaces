@@ -41,7 +41,7 @@ class validar {
   exprecionNumeroOLetras(x) {
     
     const cadena = x
-    const result = /^([a-zA-Z0-9| ])*$/.test(cadena);
+    const result = /^([a-zA-Z0-9| |?|¿])*$/.test(cadena);
     console.log(result)
     return result;
 
