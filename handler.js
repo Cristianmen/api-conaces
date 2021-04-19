@@ -1,5 +1,5 @@
 'use strict';
-const { body } = require("express-validator");
+
 const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -113,7 +113,7 @@ app.post('/repositorios', cors(), async (req, res) => {
   }
   console.log('data: ', data.content);
 
-  if (cont.exprecionNumeroOLetras(data.repoId) === true && cont.exprecionNumeroOLetras(data.content) === true) {
+  if (cont.exprecionNumeroOLetras(data.repoId) === true ) {
     const response = await userDB.putRepo(data);
 
     if (response) {
@@ -154,20 +154,21 @@ app.get('/evento', cors(), async (req, res) => {
 app.post('/evento', cors(), async (req, res) => {
   const userDB = new DynamoBDClas();
   const cont = new validar();
-  const { eventId, nombre, fecha, hora, tema, descripcion } = req.body;
+  const { eventId, nombre, fecha, hora, tema, descripcion,asistentes } = req.body;
   const data = {
     eventId: eventId,
     nombre: nombre,
     fecha: fecha,
     hora: hora,
     tema: tema,
-    descripcion: descripcion
+    descripcion: descripcion,
+    asistentes: asistentes
   }
   console.log('getevento -> :  ');
 
 
-  if (cont.exprecionLetras(data.nombre) === true && cont.exprecionFecha(data.fecha) === true &&
-    cont.exprecionHora(data.hora) === true && cont.exprecionNumeroOLetras(data.tema) === true && cont.exprecionLetras(data.descripcion) === true &&
+  if (cont.exprecionNumeroOLetras(data.nombre) === true && cont.exprecionFecha(data.fecha) === true &&
+    cont.exprecionHora(data.hora) === true && cont.exprecionNumeroOLetras(data.tema) === true && cont.exprecionNumeroOLetras(data.descripcion) === true &&
     cont.exprecionNumeroOLetras(data.eventId) === true) {
     try {
       const responde = await userDB.putEvent(data);
